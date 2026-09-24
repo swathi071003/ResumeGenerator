@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Resume Generator";
+}
+
+<div class="app">
+    <header class="app-header">
+        <h1>Resume Generator</h1>
+        <button id="downloadBtn" class="btn-primary">Download PDF</button>
+    </header>
+
+    <div class="ats-panel">
+        <div class="ats-label">
+            <span>ATS Friendliness</span>
+            <span id="atsScoreText">0%</span>
+        </div>
+        <div class="ats-bar-track">
+            <div id="atsBarFill" class="ats-bar-fill"></div>
+        </div>
+        <ul id="atsTips" class="ats-tips"></ul>
+    </div>
+
+    <div class="main-grid">
+        <!-- FORM -->
+        <div class="form-pane">
+
+            <section class="card">
+                <h2>Personal Info</h2>
+                <div class="grid-2">
+                    <input type="text" id="fullName" placeholder="Full Name" />
+                    <input type="email" id="email" placeholder="Email" />
+                    <input type="text" id="phone" placeholder="Phone" />
+                    <input type="text" id="location" placeholder="Location (City, State)" />
+                    <input type="text" id="linkedin" placeholder="LinkedIn URL" />
+                    <input type="text" id="website" placeholder="Portfolio / Website URL" />
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Summary</h2>
+                <textarea id="summary" rows="4" placeholder="A short professional summary (2-3 sentences)..."></textarea>
+            </section>
+
+            <section class="card">
+                <div class="card-header-row">
+                    <h2>Experience</h2>
+                    <button class="btn-add" onclick="addExperience()">+ Add</button>
+                </div>
+                <div id="experienceList"></div>
+            </section>
+
+            <section class="card">
+                <div class="card-header-row">
+                    <h2>Education</h2>
+                    <button class="btn-add" onclick="addEducation()">+ Add</button>
+                </div>
+                <div id="educationList"></div>
+            </section>
+
+            <section class="card">
+                <h2>Skills</h2>
+                <input type="text" id="skillsInput" placeholder="Type a skill and press Enter" />
+                <div id="skillsList" class="chip-list"></div>
+            </section>
+
+            <section class="card">
+                <div class="card-header-row">
+                    <h2>Projects</h2>
+                    <button class="btn-add" onclick="addProject()">+ Add</button>
+                </div>
+                <div id="projectsList"></div>
+            </section>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="preview-pane">
+            <div id="resumePreview" class="resume-sheet"></div>
+        </div>
+    </div>
+</div>
+
+<template id="experienceTemplate">
+    <div class="entry-card" data-index="__INDEX__">
+        <div class="grid-2">
+            <input type="text" class="exp-role" placeholder="Job Title" />
+            <input type="text" class="exp-company" placeholder="Company" />
+            <input type="text" class="exp-start" placeholder="Start Date" />
+            <input type="text" class="exp-end" placeholder="End Date (or Present)" />
+        </div>
+        <textarea class="exp-bullets" rows="3" placeholder="One bullet point per line. Start with an action verb and add numbers where you can."></textarea>
+        <button class="btn-remove" onclick="removeEntry('experience', __INDEX__)">Remove</button>
+    </div>
+</template>
+
+<template id="educationTemplate">
+    <div class="entry-card" data-index="__INDEX__">
+        <div class="grid-2">
+            <input type="text" class="edu-degree" placeholder="Degree" />
+            <input type="text" class="edu-school" placeholder="School" />
+            <input type="text" class="edu-start" placeholder="Start Date" />
+            <input type="text" class="edu-end" placeholder="End Date" />
+        </div>
+        <button class="btn-remove" onclick="removeEntry('education', __INDEX__)">Remove</button>
+    </div>
+</template>
+
+<template id="projectTemplate">
+    <div class="entry-card" data-index="__INDEX__">
+        <input type="text" class="proj-name" placeholder="Project Name" />
+        <textarea class="proj-desc" rows="2" placeholder="Brief description"></textarea>
+        <input type="text" class="proj-link" placeholder="Link (optional)" />
+        <button class="btn-remove" onclick="removeEntry('projects', __INDEX__)">Remove</button>
+    </div>
+</template>
